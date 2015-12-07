@@ -69,3 +69,27 @@ int   ft_exec(char **env, char *line, char **av)
   ft_free_tab(&cmd);
   return (0);
 }
+
+int   ft_read_cmd(char **env, char **av)
+{
+  int   ret;
+  char  *line;
+
+  ft_printf("$> ");
+  ret = ft_get_next_line(0, &line);
+  if (!line || ret == -1 || ret == 0)
+  {
+    ft_free(&line);
+    return (1);
+  }
+  if (line[0] != 0)
+  {
+    if (ft_exec(env, line, av))
+    {
+      ft_free(&line);
+      return (1);
+    }
+  }
+  ft_free(&line);
+  return (0);
+}

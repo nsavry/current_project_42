@@ -1,14 +1,21 @@
 #include <stdlib.h>
+#include <unistd.h>
 #include "minishell.h"
 #include "libft.h"
 
 char  **ft_build_env(void)
 {
   char  **env;
+  char  *str;
 
-  env = malloc(sizeof(char *) * 2);
-  env[0] = ft_strdup("/bin:/usr/bin");
-  env[1] = NULL;
+  env = malloc(sizeof(char *) * 5);
+  str = getcwd(NULL, 1);
+  env[0] = ft_strdup("PATH=/bin:/usr/bin");
+  env[1] = ft_strjoin("HOME=", str);
+  env[2] = ft_strjoin("PWD=", str);
+  env[3] = ft_strjoin("OLDPWD=", str);
+  env[4] = NULL;
+  ft_free(&str);
   return (env);
 }
 
