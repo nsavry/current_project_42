@@ -91,6 +91,7 @@ int					ft_str_tab_len(char **tab);
 void				ft_put_str_tab(char **tab);
 char				**ft_str_tab_dup(char **tab);
 char				*ft_strsubin(char *str, int i, int j);
-void        ft_free_tab(char ***tab);
+void				ft_free_tab(char ***tab);
+void				ft_free(char **str);
 
 #endif

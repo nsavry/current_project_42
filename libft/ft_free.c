@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsavry <nsavry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 17:31:07 by nsavry            #+#    #+#             */
-/*   Updated: 2013/11/30 14:35:15 by nsavry           ###   ########.fr       */
+/*   Created: 2013/12/13 12:47:06 by nsavry            #+#    #+#             */
+/*   Updated: 2013/12/17 18:01:00 by nsavry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void	ft_free_tab(char ***tab)
+void	ft_free(char **str)
 {
-	int			i;
-	i = 0;
-
-	if (*tab)
-	{
-		while (*((*tab) + i))
-		{
-			if (*((*tab) + i))
-				free(*((*tab) + i));
-			i++;
-		}
-		free(*tab);
-	}
+	if (*str)
+		free(*str);
 }

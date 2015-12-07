@@ -1,6 +1,8 @@
 NAME = minishell
 
 FTC =	ft_main.c\
+		ft_env.c\
+		ft_cmd.c\
 
 FTO = $(subst .c,.o,$(FTC))
 

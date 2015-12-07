@@ -4,91 +4,32 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "libft.h"
+#include "minishell.h"
 
-int		main(int ac, char **av, char **env)
+int		main(int ac, char **av, char **env_o)
 {
-	pid_t		pid;
-	struct stat *buf;
-	int			i;
-	char		**tab;
-	char		**path;
-	char		**cmd;
-	char		*tmp;
-	char		*line;
-	char		*cmd_i;
+	char	**env;
+	char	*line;
+	int		ret;
 
 	(void)ac;
-	i = 0;
-	if (*env == NULL)
-	{
-		path = malloc(sizeof(char *) * 3);
-		path[0] = ft_strdup("/bin");
-		path[1] = ft_strdup("/usr/bin");
-		path[2] = NULL;
-	}
+	if (*env_o == NULL)
+		env = ft_build_env();
 	else
-	{
-		while (env[i] != NULL)
-		{
-			tab = ft_strsplit(env[i], '=');
-			if (ft_strcmp(tab[0], "PATH") == 0)
-				break ;
-			i++;
-			ft_free_tab(&tab);
-		}
-		path = ft_strsplit(tab[1], ':');
-		ft_free_tab(&tab);
-	}
-	buf = malloc(sizeof(struct stat));
+		env = env_o;
 	while (1)
 	{
 		ft_printf("$> ");
-		ft_get_next_line(0, &line);
+		ret = ft_get_next_line(0, &line);
+		if (!line || ret == -1 || ret == 0)
+			break ;
 		if (line[0] != 0)
 		{
-			cmd = ft_strsplit(line, ' ');
-			if (ft_strcmp(cmd[0], "exit") == 0)
+			if (ft_exec(env, line, av))
 				break ;
-			cmd_i = ft_strdup(cmd[0]);
-			i = 0;
-			if (stat(cmd[0], buf) != 0)
-			{
-				while (path[i])
-				{
-					tmp = cmd[0];
-					cmd[0] = ft_strjoin("/", cmd_i);
-					free(tmp);
-					tmp = cmd[0];
-					cmd[0] = ft_strjoin(path[i], tmp);
-					free(tmp);
-					if (stat(cmd[0], buf) == 0)
-						break ;
-					i++;
-				}
-			}
-			if (path[i] == NULL)
-				ft_printf("%s: command not found: %s\n", av[0], cmd_i);
-			else
-			{
-				pid = fork();
-				if (pid == 0)
-				{
-					execve(cmd[0], cmd, NULL);
-					exit(0);
-				}
-				wait(NULL);
-
-			}
-			ft_free_tab(&cmd);
-			free(cmd_i);
 		}
-		free(line);
+		ft_free(&line);
 	}
-	if (line[0] != 0)
-		ft_free_tab(&cmd);
-	free(line);
-	ft_free_tab(&path);
-	free(buf);
-	ft_printf("loooool");
+	ft_free(&line);
 	return (0);
 }

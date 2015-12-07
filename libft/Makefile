@@ -81,7 +81,8 @@ FTC = ft_atoi.c\
 	  ft_put_str_tab.c\
 	  ft_str_tab_dup.c\
 	  ft_strsubin.c\
-		ft_free_tab.c
+	  ft_free_tab.c\
+	  ft_free.c
 
 FTO = $(subst .c,.o,$(FTC))
 
