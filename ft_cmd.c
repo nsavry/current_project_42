@@ -1,10 +1,10 @@
-#include "minishell.h"
-#include "libft.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "minishell.h"
+#include "libft.h"
 
 int   ft_check_cmd(char **path, char **cmd, char *cmd_i)
 {
@@ -36,7 +36,7 @@ int   ft_check_cmd(char **path, char **cmd, char *cmd_i)
 void  ft_fork_cmd(char **cmd)
 {
   pid_t pid;
-
+  
   pid = fork();
   if (pid == 0)
   {
